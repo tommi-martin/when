@@ -1,18 +1,9 @@
-# create-svelte
+# When
 
-Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
+When is a small Sveltekit + Clojure program meant to enable users to vote when their particular event is going to be held.
 
-## Creating a project
-
-If you're seeing this, you've probably already done this step. Congrats!
-
-```bash
-# create a new project in the current directory
-npm create svelte@latest
-
-# create a new project in my-app
-npm create svelte@latest my-app
-```
+## Current status:
+non-functional: Development in progress.
 
 ## Developing
 

@@ -2,10 +2,16 @@
 <script>
     export let day;
     export let date;
-    // Add your drag and drop logic here
-  </script>
+    export let selected = false;
+    export let current = false;
+</script>
 
-<div id="date-{date}" class="p-4 border border-gray-200">
+{#if date !== null}
+<div id="date-{date}" class="p-4 border  {current ? "border-red-200" : "border-gray-200"} {selected ? "bg-gray-600" : ""}">
     <p>{day}</p>
     <p>{date}</p>
 </div>
+{:else}
+<div class="p-4 border-0">
+</div>
+{/if}

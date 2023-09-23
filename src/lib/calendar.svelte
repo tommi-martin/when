@@ -1,15 +1,26 @@
 <script>
-	import CalendarDate from "./calendarDate.svelte";
+    import CalendarDate from "./calendarDate.svelte";
 
     let days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
-	let date = new Date();
-	let currentDate = date.getDate();
-	let month = date.getMonth();
-	let year = date.getFullYear();
-	let dates = [];
+    let date = new Date();
+    let currentDate = date.getDate();
+    let month = date.getMonth();
+    let year = date.getFullYear();
+    /**
+     * @typedef {Object} DateObject
+     * @property {String} day
+     * @property {Number | null} date
+     * @property {Boolean} current
+     * @property {Boolean} selected
+     */
 
-	let firstDay = (new Date(year, month)).getDay();
-	let daysInMonth = 32 - new Date(year, month, 32).getDate();
+    /**
+     * @type Array<DateObject> dates
+     */
+    let dates = [];
+
+    let firstDay = (new Date(year, month)).getDay();
+    let daysInMonth = 32 - new Date(year, month, 32).getDate();
 
    // Adjust the firstDay to match with the new days array
    firstDay = (firstDay + 6) % 7;
@@ -24,14 +35,14 @@
        });
    }
 
-	for (let i = 1; i <= daysInMonth; i++) {
-		dates.push({
-			day: days[(firstDay + i - 1) % 7],
-			date: i,
-			current: currentDate === i,
-			selected: false
-		});
-	}
+    for (let i = 1; i <= daysInMonth; i++) {
+        dates.push({
+            day: days[(firstDay + i - 1) % 7],
+            date: i,
+            current: currentDate === i,
+            selected: false
+        });
+    }
 </script>
 
 <div class="container h-full mx-auto">

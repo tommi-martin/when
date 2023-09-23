@@ -1,8 +1,12 @@
 <!-- DateComponent.svelte -->
 <script>
+    /** @type {String} day */
     export let day;
+    /** @type {Number|null} */
     export let date;
+    /** @type {Boolean} */
     export let selected = false;
+    /** @type {Boolean}*/
     export let current = false;
 
     function handleClick() {

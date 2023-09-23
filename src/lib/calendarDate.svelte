@@ -4,10 +4,14 @@
     export let date;
     export let selected = false;
     export let current = false;
+
+    function handleClick() {
+      selected = !selected;
+    }
 </script>
 
 {#if date !== null}
-<div id="date-{date}" class="p-4 border  {current ? "border-red-200" : "border-gray-200"} {selected ? "bg-gray-600" : ""}">
+<div id="date-{date}" class="p-4 border cursor-pointer {current ? "border-red-200" : "border-gray-200"} {selected ? "bg-gray-600" : ""}" on:click={handleClick}>
     <p>{day}</p>
     <p>{date}</p>
 </div>

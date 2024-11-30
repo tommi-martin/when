@@ -1,7 +1,6 @@
 (ns repl
   (:require
-   [backend.core :as srv]
-   [ring.adapter.jetty :as jetty]
+   [backend.system :as system]
    [shadow.cljs.devtools.api :as shadow]))
 
 (defonce jetty-ref (atom nil))
@@ -11,10 +10,7 @@
   []
   (shadow/watch :frontend)
 
-  (reset! jetty-ref
-          (jetty/run-jetty #'srv/handler
-                           {:port 3000
-                            :join? false}))
+  (reset! jetty-ref (system/start-system))
   (println "--------------------------------")
   (println "Started server on port 3000")
   (println "http://localhost:3000")
@@ -24,7 +20,7 @@
 (defn stop []
   (when-some [jetty @jetty-ref]
     (reset! jetty-ref nil)
-    (.stop jetty))
+    (system/stop-system jetty))
   ::stopped)
 
 (defn go []

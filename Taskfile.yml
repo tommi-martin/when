@@ -25,19 +25,30 @@ tasks:
     cmds: 
       - task -a --sort none
 
+  format:
+    aliases: [f]
+    desc: formats the code
+    cmds:
+      - clojure -M:format -m cljfmt.main fix src test
+
+  format:check:
+    aliases: [fc]
+    desc: checks if the code is formatted correctly
+    cmds:
+      - clojure -M:format -m cljfmt.main check src test
+
+  lint:
+    aliases: [l]
+    desc: lints the code
+    cmds:
+      - clojure -M:lint -m clj-kondo.main --lint ./src
+
   run:
     desc: starts the application for development includes BE and FE with file watcher
     deps: [frontend:install:node]
     aliases: [r]
     cmds:
       - clojure -M:frontend:dev
-
-  run:with-test:
-    desc: run with test namespace loaded to repl.
-    deps: [frontend:install:node]
-    aliases: [rt]
-    cmds:
-      - clojure -M:test:frontend:dev
 
   test:
     desc: Runs all test suites

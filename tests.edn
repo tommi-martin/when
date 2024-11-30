@@ -8,5 +8,5 @@
                       :kaocha.testable/id      :unit
                       :kaocha/ns-patterns      ["-test$"]
                       :kaocha/source-paths     ["src/when"]
-                      :kaocha/test-paths       ["src/test"]
+                      :kaocha/test-paths       ["test"]
                       :kaocha.filter/skip-meta [:kaocha/skip :integration :ignore]}]}

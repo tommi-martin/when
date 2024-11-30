@@ -1,0 +1,9 @@
+{:deps {:aliases [:frontend]} ; defer dependencies to deps.edn instead of here.
+ :builds {:frontend {:target     :browser
+                     :output-dir "compiled-resources/public/js"
+                     :asset-path "/js"
+                     :modules    {:frontend {:entries [frontend.core]
+                                             :init-fn frontend.core/init}}
+                     :release    {:compiler-options {:optimizations :simple}}
+                     :devtools {:watch-dir "resources/public"}}}
+ :nrepl {:port 7000}}

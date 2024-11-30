@@ -1,29 +1,12 @@
-# Node modules and dependencies
-node_modules
-
-# Build directory
-/build
-
-# SvelteKit cache
-/.svelte-kit
-/package
-
-# Environment variables
-.env
-.env.*
-
-# Ignore all .env files except for .env.example
-!.env.example
-
-# Ignore vite config timestamps
-vite.config.js.timestamp-*
-vite.config.ts.timestamp-*
-
-# Ignore VSCode settings
-.vscode/
-
-# Ignore local history
-.history/
-
-# Ignore MacOS system files
-.DS_Store
+.direnv/
+# Logs
+logs
+*.log
+.clj-kondo/
+.cpcache/
+.lsp/
+.shadow-cljs/
+.task/
+node_modules/
+.calva/
+compiled-resources/

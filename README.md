@@ -1,29 +1,19 @@
-# When
+# When Scheduler app
+When scheduler is a small web-application that allows for users to create and schedule events with other users.
+First selecting open dates and then voting on the best date the users can more easily agree on event dates.
 
-When is a small Sveltekit + Clojure program meant to enable users to vote when their particular event is going to be held.
+Goal of the app is to take excessive messaging and back-and-forth out of scheduling events and let the users focus on what really matters - the event itself.
 
 ## Current status:
 non-functional: Development in progress.
 
-## Developing
+## Development
+Scheduler is created using clojure and helix.core library for the frontend written with clojurescript and producing react website.
 
-Once you've created a project and installed dependencies with `npm install` (or `pnpm install` or `yarn`), start a development server:
+Development and project dependencies are managed using nix flakes and nix compatible packages. After nix installs the tools, task file is used to manage and run the project itself.
 
-```bash
-npm run dev
-
-# or start the server and open the app in a new browser tab
-npm run dev -- --open
-```
-
-## Building
-
-To create a production version of your app:
-
-```bash
-npm run build
-```
-
-You can preview the production build with `npm run preview`.
-
-> To deploy your app, you may need to install an [adapter](https://kit.svelte.dev/docs/adapters) for your target environment.
+### Requirements
+- nix
+- nix flake
+- direnv
+- task

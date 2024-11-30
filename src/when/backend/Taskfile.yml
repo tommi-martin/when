@@ -1,0 +1,10 @@
+version: '3'
+
+vars:
+  VERSION: "{{.VERSION}}"
+
+tasks:
+  default:
+    desc: default task
+    cmds:
+      - task -a --sort none

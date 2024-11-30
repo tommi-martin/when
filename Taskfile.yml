@@ -1,0 +1,48 @@
+version: '3'
+
+vars:
+  IMAGE: when-scheduler
+  VERSION: "0.0.1"
+  PLATFORMS: linux/arm64 linux/amd64
+  CURRENT_ARCH:
+    sh: uname -m
+
+includes:
+  backend: 
+    taskfile: src/when/backend/Taskfile.yml
+    vars: 
+      VERSION: "{{.VERSION}}"
+  frontend: 
+    taskfile: src/when/frontend/Taskfile.yml
+    vars:
+      VERSION: "{{.VERSION}}"
+
+tasks:
+  default:
+    desc: default task
+    cmds: 
+      - task -a --sort none
+
+  run:
+    desc: starts the application for development includes BE and FE with file watcher
+    deps: [frontend:install:node]
+    aliases: [r]
+    cmds:
+      - clojure -M:frontend:dev
+
+  run:with-test:
+    desc: run with test namespace loaded to repl.
+    deps: [frontend:install:node]
+    aliases: [rt]
+    cmds:
+      - clojure -M:test:frontend:dev
+
+  test:
+    desc: Runs all test suites
+    cmds:
+      - clj -X:test
+
+  test:watch:
+    desc: Runs all test suites and watches for changes
+    cmds:
+      - clj -X:test:watch

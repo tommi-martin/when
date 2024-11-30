@@ -1,12 +1,13 @@
-.direnv/
 # Logs
-logs
 *.log
+.calva/
 .clj-kondo/
 .cpcache/
+.direnv/
 .lsp/
 .shadow-cljs/
 .task/
-node_modules/
-.calva/
+.tmp/
 compiled-resources/
+logs
+node_modules/

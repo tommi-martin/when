@@ -4,10 +4,10 @@
    [ring.middleware.file :as ring-file]
    [ring.middleware.file-info :as ring-file-info]))
 
-(defn main-handler [req]
+(defn main-handler [_]
   {:status 200
    :headers {"content-type" "text/plain"}
-   :body "Hello World! 2"})
+   :body "Hello World!"})
 
 (def handler
   (-> main-handler

@@ -6,6 +6,8 @@ vars:
   PLATFORMS: linux/arm64 linux/amd64
   CURRENT_ARCH:
     sh: uname -m
+  PWD:
+    sh: pwd
 
 includes:
   backend: 
@@ -46,3 +48,27 @@ tasks:
     desc: Runs all test suites and watches for changes
     cmds:
       - clj -X:test:watch
+
+  db:init:
+    desc: inits local postgres database
+    cmds:
+      - initdb -D .tmp/mydb # Create a database with the data stored in the current directory
+      - pg_ctl -D .tmp/mydb -l .tmp/logfile -o "--unix_socket_directories='{{ .PWD }}/.tmp'" start # Start PostgreSQL running as the current user and with the Unix socket in the current directory
+      - createdb mydb # Create a database
+      - psql mydb < resources/postgresql/create-tables.pgsql # Run the SQL script to create tables in mydb
+    requires:
+      vars: [PWD]
+
+  db:delete:
+    desc: deletes local postgres database
+    cmds:
+      - pg_ctl -D .tmp/mydb -l .tmp/logfile -o "--unix_socket_directories='{{ .PWD }}'" stop
+      - rm -rf .tmp/
+    requires:
+      vars: [PWD]
+
+  db:connect:
+    desc: Run psql to connect to running database.
+    aliases: [db]
+    cmds:
+      - psql mydb

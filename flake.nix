@@ -22,9 +22,11 @@
         in
         with pkgs;
         {
-          devShells.default = mkShell {
-            venvDir = "venv";
-            inherit buildInputs;
+          devShells.default = mkShellNoCC {
+            buildInputs = buildInputs;
+            shellHook = ''
+              export PGHOST="/$PWD/.tmp"
+            '';
           };
         }
       );

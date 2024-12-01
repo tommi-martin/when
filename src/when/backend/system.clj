@@ -3,26 +3,33 @@
             [next.jdbc.connection :as connection]
             [ring.adapter.jetty :as jetty])
   (:import (com.zaxxer.hikari HikariDataSource)
+           (io.github.cdimascio.dotenv Dotenv)
            (org.eclipse.jetty.server Server)))
 
 (set! *warn-on-reflection* true)
 
-(defn start-db
+(defn start-env
   []
+  (Dotenv/load))
+
+(defn start-db
+  [{::keys [env]}]
   (connection/->pool HikariDataSource
                      {:dbtype "postgres"
                       :dbname "mydb"
-                      :username (System/getProperty "user.name")}))
+                      :username (Dotenv/.get env "POSTGRES_USERNAME")
+                      :password (Dotenv/.get env "POSTGRES_PASSWORD")}))
 
 (defn stop-db
   [db]
   (HikariDataSource/.close db))
 
 (defn start-server
-  [system]
+  [{::keys [env] :as system}]
   (jetty/run-jetty
    (partial #'routes/root-handler system)
-   {:port 3000 :join? false}))
+   {:port (Long/parseLong (Dotenv/.get env "PORT"))
+    :join? false}))
 
 (defn stop-server
   [server]
@@ -30,8 +37,10 @@
 
 (defn start-system
   []
-  (let [system {::db (start-db)}]
-    (merge system {::server (start-server system)})))
+  (let [system {::env (start-env)}
+        system (merge system {::db (start-db system)})
+        system (merge system {::server (start-server system)})]
+    system))
 
 (defn stop-system
   [system]

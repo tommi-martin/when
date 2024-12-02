@@ -24,5 +24,4 @@
 
 (comment
   (restart)
-
   (Dotenv/.get (env) "POSTGRES_USERNAME"))

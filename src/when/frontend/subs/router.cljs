@@ -4,4 +4,9 @@
 (reg-sub
  :router-location
  (fn [db _]
-   (get-in db [:app :router-match])))
+   (get-in db [:app :router-location])))
+
+(reg-sub
+ :csrf-token
+ (fn [db _]
+   (get-in db [:app :csrf-token])))

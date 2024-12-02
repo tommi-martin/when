@@ -12,7 +12,7 @@
    (static/routes system)])
 
 (defn root-handler
-  [system request]
+  [system request] 
   (log/info (str (:request-method request) " - " (:uri request)))
   (let [handler (reitit-ring/ring-handler
                  (reitit-ring/router
@@ -20,11 +20,9 @@
                  (reitit-ring/routes
                   (reitit-ring/create-resource-handler
                    {:path "/"})
-                  ;; Please note that using the index handler as not-found
-                  ;; handler results in the server returning 200 ok for all
-                  ;; unknown routes. This is bad for SEO.
-                  ;; It should be either handled by FE router or by a shared
-                  ;; router in a common file.
-                  (reitit-ring/create-default-handler 
-                   {:not-found (partial static/index-handler system)})))]
+                  (reitit-ring/create-default-handler
+                   {:not-found
+                    (constantly
+                     {:status 404
+                      :body "404 not found! You're lost! Go back!"})})))]
     (handler request)))

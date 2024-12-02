@@ -3,6 +3,8 @@
             ["react-dom/client" :as rdom]
             [frontend.events.app]
             [frontend.subs.core]
+            [frontend.views.events :as view.events]
+            [frontend.views.frontpage :as view.index]
             [helix.core :refer [defnc $ <>]]
             [helix.dom :as d]
             [helix.hooks :as hooks]
@@ -11,17 +13,6 @@
             [reitit.frontend.easy :as rfe]))
 
 (defonce root (atom nil))
-
-(defnc Greeting
-  [{:keys [name]}]
-  (d/div "Hello, " name))
-
-(defnc Dashboard []
-  (let [[state set-state] (hooks/use-state {:name "helix user"})]
-    (d/div "Dashboard"
-           ($ Greeting {:name (:name state)})
-           (d/input {:value (:name state)
-                     :on-change #(set-state assoc :name (.. % -target -value))}))))
 
 (defnc NotFound []
   (d/div "Not found"))
@@ -37,9 +28,6 @@
                   "Events"))))
      ($ (get-in location [:data :view] NotFound)))))
 
-(defnc Debug []
-  (d/div "Debug"))
-
 (defn react-root
   []
   (when-let [elem (js/document.getElementById "app")]
@@ -52,12 +40,14 @@
            ($ react/StrictMode
               ($ app))))
 
+;; TODO: use common file for routes to make sure backend server sends correct http status.
 (def routes
   [["/" {:name ::frontpage
-         :view Dashboard}]
+         :view view.index/Dashboard}]
    ["/events" {:name ::events
-               :view Debug}]
-   ["/events/:id" {:name ::event}]])
+               :view view.events/Events}]
+   ["/event" {:name ::event}]
+   ["/event/:id" {:name ::event-id}]])
 
 (defn ^:dev/after-load init []
   (dispatch-sync [:init])

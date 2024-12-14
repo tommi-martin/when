@@ -5,11 +5,8 @@
 (defn standard-api-router-middleware
   [_]
   [(fn [handler]
-     (-> (mw-defaults/wrap-defaults handler
-                                    (assoc-in
-                                     mw-defaults/api-defaults
-                                     [:security :anti-forgery]
-                                     true))
+     (-> (mw-defaults/wrap-defaults handler 
+                                    mw-defaults/api-defaults)
          muuntaja-mw/wrap-format))])
 
 (defn standard-html-route-middleware

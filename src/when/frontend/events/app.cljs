@@ -9,10 +9,14 @@
    (let [db {:app {:csrf-token nil
                    :router-location nil}}]
      (api/fetch (fn [body]
-                  (prn "body: " body)
                   (dispatch [:csrf-token (:csrf-token body)]))
                 "/api/v1/init")
      {:db db :fx []})))
+
+(reg-event-fx
+ :create-event
+ (fn [_ [_ form]]
+   (api/post "/api/v1/events" form)))
 
 (reg-event-db
  :router-location
@@ -26,7 +30,6 @@
 
 (comment
   (api/fetch (fn [body]
-               (prn "body: " body)
                (dispatch [:csrf-token (:csrf-token body)]))
              "/api/v1/init")
 

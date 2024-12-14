@@ -16,9 +16,6 @@
 (defn index-handler
   [{::system/keys [db]} request]
   (debug-postgres db)
-  (prn "------")
-  (prn (af/anti-forgery-field))
-  (prn "------")
   (or (resp/resource-response (:uri request) {:root "public"})
       (-> (resp/resource-response "index.html" {:root "public"})
           (resp/content-type "text/html"))))
@@ -33,3 +30,4 @@
    ["/events" {:get {:handler (partial #'index-handler system)}}]
    ["/event" {:get {:handler (partial #'index-handler system)}}]
    ["/event/:id" {:get {:handler (partial #'index-handler system)}}]])
+

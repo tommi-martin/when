@@ -1,12 +1,13 @@
 (ns frontend.core
   (:require ["react" :as react]
             ["react-dom/client" :as rdom]
-            ["@mui/material" :as mui]
             ["@mui/icons-material" :as mui-icons]
+            ["@mui/material" :as mui]
             [frontend.events.app]
             [frontend.subs.core]
             [frontend.views.events :as view.events]
             [frontend.views.frontpage :as view.index]
+            [frontend.views.users :as view.users]
             [helix.core :refer [defnc $ <>]]
             [helix.dom :as d]
             [helix.hooks :as hooks]
@@ -20,14 +21,16 @@
 (defnc NotFound []
   (d/div "Not found"))
 
-
 (def main-menu
   [{:href ::frontpage
     :label "Home"
     :icon mui-icons/Home}
    {:href ::events
     :label "Events"
-    :icon mui-icons/Bento}])
+    :icon mui-icons/Bento}
+   {:href ::users
+    :label "Users"
+    :icon mui-icons/People}])
 
 (defnc MenuItem 
   [{:keys [href label icon]}]
@@ -80,7 +83,9 @@
          :view view.index/Dashboard}]
    ["/events" {:name ::events
                :view view.events/Events}]
-   ["/event" {:name ::event}]
+   ["/users" {:name ::users
+              :view view.users/UsersList}]
+   ["/users/:id" {:name ::user-id}]
    ["/event/:id" {:name ::event-id}]])
 
 (defn ^:dev/after-load init []

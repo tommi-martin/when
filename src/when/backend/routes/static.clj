@@ -28,6 +28,5 @@
   ["" {:middleware (middleware/standard-html-route-middleware system)}
    ["/" {:get {:handler (partial #'index-handler system)}}]
    ["/events" {:get {:handler (partial #'index-handler system)}}]
-   ["/event" {:get {:handler (partial #'index-handler system)}}]
+   ["/users" {:get {:handler (partial #'index-handler system)}}]
    ["/event/:id" {:get {:handler (partial #'index-handler system)}}]])
-

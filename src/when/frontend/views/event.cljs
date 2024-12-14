@@ -1,1 +1,0 @@
-(ns frontend.views.event)

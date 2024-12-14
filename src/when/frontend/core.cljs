@@ -2,6 +2,7 @@
   (:require ["react" :as react]
             ["react-dom/client" :as rdom]
             ["@mui/material" :as mui]
+            ["@mui/icons-material" :as mui-icons]
             [frontend.events.app]
             [frontend.subs.core]
             [frontend.views.events :as view.events]
@@ -14,23 +15,52 @@
             [reitit.frontend.easy :as rfe]))
 
 (defonce root (atom nil))
+(defonce drawer-width 240)
 
 (defnc NotFound []
   (d/div "Not found"))
 
+
+(def main-menu
+  [{:href ::frontpage
+    :label "Home"
+    :icon mui-icons/Home}
+   {:href ::events
+    :label "Events"
+    :icon mui-icons/Bento}])
+
+(defnc MenuItem 
+  [{:keys [href label icon]}]
+  (d/$d mui/ListItem
+        {:disable-padding true}
+        (d/$d mui/ListItemButton
+              {:component "a"
+               :href (rfe/href href)}
+              (d/$d mui/ListItemIcon (d/$d icon))
+              (d/$d mui/ListItemText label))))
+
+(defnc Menu []
+  (d/$d mui/Drawer
+        {:anchor "left"
+         :variant "permanent"
+         :sx #js{:width drawer-width
+                 :flexShrink 0
+                 "& .MuiDrawer-paper" #js{:width drawer-width
+                                          :box-sizing "border-box"}}}
+        (d/$d mui/List
+              {:component "nav"}
+              (for [props main-menu]
+                ($ MenuItem {:key (:label props)
+                             & props})))))
+
 (defnc App []
   (let [location (use-sub [:router-location])]
-    (<>
-     (d/$d mui/CssBaseline)
-     (d/$d mui/Drawer {:anchor "left" 
-                       :variant "permanent"} 
-           (d/$d mui/List)
-           (d/$d mui/ListItem
-                 (d/a {:href (rfe/href ::frontpage)} "home"))
-           (d/$d mui/ListItem
-                 (d/a {:href (rfe/href ::events)} "Events"))) 
-     (d/$d mui/Container
-           ($ (get-in location [:data :view] NotFound))))))
+    (d/$d mui/Box
+          {:sx #js{:display "flex"}}
+          (d/$d mui/CssBaseline)
+          ($ Menu)
+          (d/$d mui/Container
+                ($ (get-in location [:data :view] NotFound))))))
 
 (defn react-root
   []

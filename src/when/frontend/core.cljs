@@ -1,6 +1,7 @@
 (ns frontend.core
   (:require ["react" :as react]
             ["react-dom/client" :as rdom]
+            ["@mui/material" :as mui]
             [frontend.events.app]
             [frontend.subs.core]
             [frontend.views.events :as view.events]
@@ -20,13 +21,16 @@
 (defnc App []
   (let [location (use-sub [:router-location])]
     (<>
-     (d/div
-      (d/ul
-       (d/li (d/a {:href (rfe/href ::frontpage)}
-                  "home"))
-       (d/li (d/a {:href (rfe/href ::events)}
-                  "Events"))))
-     ($ (get-in location [:data :view] NotFound)))))
+     (d/$d mui/CssBaseline)
+     (d/$d mui/Drawer {:anchor "left" 
+                       :variant "permanent"} 
+           (d/$d mui/List)
+           (d/$d mui/ListItem
+                 (d/a {:href (rfe/href ::frontpage)} "home"))
+           (d/$d mui/ListItem
+                 (d/a {:href (rfe/href ::events)} "Events"))) 
+     (d/$d mui/Container
+           ($ (get-in location [:data :view] NotFound))))))
 
 (defn react-root
   []

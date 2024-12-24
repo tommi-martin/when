@@ -17,3 +17,36 @@ Development and project dependencies are managed using nix flakes and nix compat
 - nix flake
 - direnv
 - task
+
+
+## Todo list
+- [ ] Feature: create user
+- [ ] Feature: user login
+- [ ] Feature: user logout
+- [ ] Feature: guest user
+- [ ] Feature: password reset
+- [ ] Feature: Google login
+- [ ] Feature: other login providers.
+
+- [ ] Feature: create event (Crud)
+- [ ] Feature-set: vote on event
+  - [ ] select open time ranges
+  - [ ] see other quest time ranges
+  - [ ] vote on time ranges
+- [ ] Feature: invite guest to event (link with)
+- [ ] Feature: list events user is attached to.
+- [ ] Feature: event reminder
+- [ ] Feature: event close action
+
+- [ ] Feature: Calendar invitation
+  - [ ] Google calendar
+  - [ ] Microsoft calendar
+  - [ ] Apple calendar
+
+- [ ] Feature: email server.
+
+- [ ] Fix: NPM dependencies should be managed by nix
+- [ ] Investigation: harden api layer.
+- [ ] Investigation: Nix builds 
+- [ ] Investigation: what application looks like in production: architecture.
+- [ ] Investigation: security hardening - injections.

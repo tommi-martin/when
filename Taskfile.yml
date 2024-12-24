@@ -70,10 +70,19 @@ tasks:
     requires:
       vars: [PWD]
 
+  db:start:
+    desc: starts local postgres database
+    cmds:
+      - pg_ctl -D .tmp/mydb -l .tmp/logfile -o "--unix_socket_directories='{{ .PWD }}'" start
+
+  db:stop:
+    desc: stops local postgres database
+    cmds:
+      - pg_ctl -D .tmp/mydb -l .tmp/logfile -o "--unix_socket_directories='{{ .PWD }}'" stop
+
   db:delete:
     desc: deletes local postgres database
     cmds:
-      - pg_ctl -D .tmp/mydb -l .tmp/logfile -o "--unix_socket_directories='{{ .PWD }}'" stop
       - rm -rf .tmp/
     requires:
       vars: [PWD]
